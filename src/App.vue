@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import {HelloWorld} from './components';
+import {FileReader} from '@/components';
+
 </script>
 
 <template>
-  <HelloWorld/>
+  <FileReader/>
 </template>
 
 <style scoped>
