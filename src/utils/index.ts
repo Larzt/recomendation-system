@@ -1,1 +1,1 @@
-export { AddFile } from 'files.ts'
+export { processFileData } from './processFileData.ts'
