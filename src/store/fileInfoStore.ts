@@ -1,7 +1,9 @@
 import { defineStore } from 'pinia';
-import { processFileData } from "@/utils";
+import { processFileData, generateMatrix } from "@/utils";
+import {dummyFunction} from "@/utils/metricas/pearson.ts";
 
-export type FilePosition = {
+export type ItemInfo = {
+    value: string | number;
     row: number;
     col: number;
 };
@@ -12,7 +14,6 @@ interface FileInfoState {
     maxItemValue: number;
     rows: number;
     cols: number;
-    unknownValues: FilePosition[];
 }
 
 export const useFileInfoStore = defineStore('fileInfo', {
@@ -22,7 +23,6 @@ export const useFileInfoStore = defineStore('fileInfo', {
         maxItemValue: -1,
         rows: -1,
         cols: -1,
-        unknownValues: [],
     }),
     getters: {
         getFileData: (state) => state.fileData,
@@ -30,12 +30,13 @@ export const useFileInfoStore = defineStore('fileInfo', {
         getMaxItemValue: (state) => state.maxItemValue,
         getRows: (state) => state.rows,
         getCols: (state) => state.cols,
-        getUnknownValues: (state) => state.unknownValues,
     },
     actions: {
         setFileInfo(data: string) {
             this.fileData = data;
             processFileData();
+            generateMatrix();
+            dummyFunction();
         },
         setMinItemValue(min: number) {
             this.minItemValue = min;
@@ -48,9 +49,6 @@ export const useFileInfoStore = defineStore('fileInfo', {
         },
         setCols(cols: number) {
             this.cols = cols;
-        },
-        setUnknownValues(values: FilePosition[]) {
-            this.unknownValues = values;
         },
     },
 });
