@@ -16,7 +16,7 @@ export function dummyFunction() {
             console.log(useMatrixInfo.getValueAt(row, col));
         }
     }
-    console.log(useMatrixInfo.setValueAt(0, 4, 999));
+    // console.log(useMatrixInfo.setValueAt(0, 4, 999));
     // useMatrixInfo.matrix[0][4].value = 888;
     // useMatrixInfo.getMatrix[0][4].value = 888;
 

@@ -6,16 +6,14 @@ export const useMatrixInfoStore = defineStore('matrixInfo', {
     state: () => ({
         matrix: [],
     }),
+    // here goes everything that's in "state: () => {}"
     getters: {
         getMatrix: (state) => state.matrix,
         getValueAt: (state) => (row: number, col: number) => {
             return state.matrix?.[row]?.[col]?.value;
         },
-        // Calcula la media de una fila (usuario) a partir de this.matrix.
-        getRowMean: (state) => (rowIndex: number) => {
-            return rowMean(state.matrix as ItemInfo[][], rowIndex);
-        },
     },
+    // here goes everything that use parameters from "state: () => {}"
     actions: {
         showMatrix() {
             if (!this.matrix.length) {
@@ -29,10 +27,9 @@ export const useMatrixInfoStore = defineStore('matrixInfo', {
         setMatrix(matrix: ItemInfo[][])  {
             this.matrix = matrix;
         },
-        setValueAt(row: number, col: number, newValue: string | number){
-            if (this.matrix?.[row]?.[col]) {
-                this.matrix[row][col].value = newValue;
-            }
-        }
+        // Calcula la media de una fila (usuario) a partir de this.matrix.
+        getRowMean: (state) => (rowIndex: number) => {
+            return rowMean(state.matrix as ItemInfo[][], rowIndex);
+        },
     },
 })
