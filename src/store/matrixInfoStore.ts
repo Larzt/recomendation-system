@@ -28,8 +28,8 @@ export const useMatrixInfoStore = defineStore('matrixInfo', {
             this.matrix = matrix;
         },
         // Calcula la media de una fila (usuario) a partir de this.matrix.
-        getRowMean: (state) => (rowIndex: number) => {
-            return rowMean(state.matrix as ItemInfo[][], rowIndex);
+        getRowMean(rowIndex: number) {
+            return rowMean(this.matrix as ItemInfo[][], rowIndex);
         },
     },
 })

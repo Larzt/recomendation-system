@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { FileReader } from '@/components';
+import { FileReader, MatrixViewer } from '@/components';
+import {useFileInfoStore} from "@/store";
+
+const useFileStore = useFileInfoStore();
+
 </script>
 
 <template>
   <FileReader />
+  <MatrixViewer v-if="useFileStore.fileData" />
 </template>
 
 <style lang="scss">

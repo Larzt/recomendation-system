@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useFileInfoStore } from '@/store'
-import { PhFileArrowUp, PhFileText } from '@phosphor-icons/vue'
+import { PhFileArrowUp, PhCheckSquareOffset } from '@phosphor-icons/vue'
 
 const useFileInfo = useFileInfoStore()
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -34,7 +34,8 @@ function triggerFileDialog() {
 <template>
   <div class="container">
     <div class="upload-box" @click="triggerFileDialog">
-      <PhFileArrowUp size="36" weight="duotone" color="#2563eb" /> <!-- $primary-->
+      <PhFileArrowUp v-if="!useFileInfo.fileData" size="36" weight="duotone" color="#2563eb" /> <!-- $primary-->
+      <PhCheckSquareOffset v-else size="36" color="#2563eb"/>
       <label>Haz clic aquí o arrastra un archivo</label>
       <input
           ref="fileInput"
@@ -43,24 +44,6 @@ function triggerFileDialog() {
           accept=".txt"
           @change="handleFileUpload"
       />
-    </div>
-
-    <div v-if="useFileInfo.fileData != ''" class="info-card">
-      <div class="card-header">
-        <PhFileText size="28" weight="duotone" color="$primary" />
-        <h2>Información del archivo</h2>
-      </div>
-      <div class="info-grid">
-        <p><strong>Min Item Value:</strong> {{ useFileInfo.getMinItemValue }}</p>
-        <p><strong>Max Item Value:</strong> {{ useFileInfo.getMaxItemValue }}</p>
-        <p><strong>Rows:</strong> {{ useFileInfo.getRows }}</p>
-        <p><strong>Cols:</strong> {{ useFileInfo.getCols }}</p>
-      </div>
-
-      <details class="file-content">
-        <summary>Ver contenido del archivo</summary>
-        <pre>{{ useFileInfo.getFileData }}</pre>
-      </details>
     </div>
   </div>
 </template>
