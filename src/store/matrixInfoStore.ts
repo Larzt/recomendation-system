@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
-import type {ItemInfo} from "@/store/fileInfoStore.ts";
+import type {ItemInfo} from "@/store/fileInfoStore";
+import { rowMean } from '@/utils';
 
 export const useMatrixInfoStore = defineStore('matrixInfo', {
     state: () => ({
@@ -9,6 +10,10 @@ export const useMatrixInfoStore = defineStore('matrixInfo', {
         getMatrix: (state) => state.matrix,
         getValueAt: (state) => (row: number, col: number) => {
             return state.matrix?.[row]?.[col]?.value;
+        },
+        // Calcula la media de una fila (usuario) a partir de this.matrix.
+        getRowMean: (state) => (rowIndex: number) => {
+            return rowMean(state.matrix as ItemInfo[][], rowIndex);
         },
     },
     actions: {

@@ -1,2 +1,3 @@
-export { processFileData } from './processFileData.ts'
-export { generateMatrix } from './processMatrix.ts'
+export { processFileData } from './processFileData'
+export { generateMatrix } from './processMatrix'
+export { rowMean } from './metricas/rowMean'

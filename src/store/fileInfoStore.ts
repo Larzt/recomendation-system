@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { processFileData, generateMatrix } from "@/utils";
-import {dummyFunction} from "@/utils/metricas/pearson.ts";
+import { processFileData, generateMatrix, rowMean } from "@/utils";
+import { dummyFunction } from "@/utils/metricas/pearson";
 
 export type ItemInfo = {
     value: string | number;
@@ -29,7 +29,7 @@ export const useFileInfoStore = defineStore('fileInfo', {
         getMinItemValue: (state) => state.minItemValue,
         getMaxItemValue: (state) => state.maxItemValue,
         getRows: (state) => state.rows,
-        getCols: (state) => state.cols,
+        getCols: (state) => state.cols
     },
     actions: {
         setFileInfo(data: string) {
@@ -37,6 +37,8 @@ export const useFileInfoStore = defineStore('fileInfo', {
             processFileData();
             generateMatrix();
             dummyFunction();
+            const useMatrixStore = useMatrixStore();
+            console.log(useMatrixStore.getRowMean);
         },
         setMinItemValue(min: number) {
             this.minItemValue = min;
