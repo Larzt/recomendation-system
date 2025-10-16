@@ -32,12 +32,14 @@ export function euclideanDistance(Row1: number, Row2: number): number | undefine
   for (let col = 0; col < rowData1.length; col++) {
     if (rowData1[col]?.value === unknownSymbol) continue;
     if (typeof rowData1[col]?.value !== 'number') continue;
-    denominator1 += (rowData1[col]?.value as number - Mean1) ** 2; // ** 2 es elevar al cuadrado
+    denominator1 += (rowData1[col]?.value as number - Mean1) ** 2; // ** 2 is exponentiation operator
     denominator2 += (rowData2[col]?.value as number - Mean2) ** 2;
   }
   denominator_result = Math.sqrt(denominator1) * Math.sqrt(denominator2);
   
   if (denominator_result === 0) return undefined;
   return numerator / denominator_result;
+  /// TODO: en este caso no se ha tenido en cuenta si un valor de la fila es unknownSymbol y no está al final. 
+  /// Comprobar qué hacer
 }
     
