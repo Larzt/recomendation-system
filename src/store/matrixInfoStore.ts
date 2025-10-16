@@ -1,10 +1,11 @@
 import {defineStore} from "pinia";
 import type {ItemInfo} from "@/store/fileInfoStore";
 import { rowMean } from '@/utils';
+import { colMean } from '@/utils';
 
 export const useMatrixInfoStore = defineStore('matrixInfo', {
     state: () => ({
-        matrix: [],
+        matrix: [] as ItemInfo[][],
     }),
     // here goes everything that's in "state: () => {}"
     getters: {
@@ -31,5 +32,8 @@ export const useMatrixInfoStore = defineStore('matrixInfo', {
         getRowMean(rowIndex: number) {
             return rowMean(this.matrix as ItemInfo[][], rowIndex);
         },
+        getColMean(colIndex: number) {
+            return colMean(this.matrix as ItemInfo[][], colIndex);
+        }
     },
 })

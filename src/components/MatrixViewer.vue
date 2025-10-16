@@ -11,8 +11,14 @@ const matrixStore = useMatrixInfoStore();
 
 const matrix = computed(() => matrixStore.getMatrix);
 const rowMeans = computed(() => {
-  if (!matrix.value.length) return [];
+  if (!matrix.value.length) return [] as (number | undefined)[];
   return matrix.value.map((_, rowIndex) => matrixStore.getRowMean(rowIndex));
+});
+const colMeans = computed(() => {
+  const m = matrix.value;
+  if (!m.length) return [] as (number | undefined)[];
+  const cols = m[0]?.length ?? 0;
+  return Array.from({ length: cols }, (_, c) => matrixStore.getColMean(c));
 });
 </script>
 
@@ -34,9 +40,18 @@ const rowMeans = computed(() => {
 
         <td v-for="(cell, colIndex) in row" :key="colIndex">{{ cell.value }}</td>
 
-        <td class="mean">{{ rowMeans[rowIndex].toFixed(2) }}</td>
+        <td class="mean">{{ (rowMeans[rowIndex] ?? 0).toFixed(2) }}</td>
       </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <th>Media</th>
+          <td v-for="(mean, colIndex) in colMeans" :key="'mean-'+colIndex" class="mean">
+            {{ (mean ?? 0).toFixed(2) }}
+          </td>
+          <td class="mean"></td>
+        </tr>
+      </tfoot>
     </table>
   </div>
 </template>

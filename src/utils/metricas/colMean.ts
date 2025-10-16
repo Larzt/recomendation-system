@@ -2,16 +2,15 @@ import type { ItemInfo } from '@/store/fileInfoStore';
 
 const unknownSymbol = '-';
 
-export function rowMean(matrix: ItemInfo[][], rowIndex: number): number | undefined {
+
+export function colMean(matrix: ItemInfo[][], colIndex: number): number | undefined {
     if (!matrix || matrix.length === 0) return undefined;
-    const row = matrix[rowIndex];
-    if (!row) return undefined;
 
     let sum = 0;
     let count = 0;
 
-    for (let c = 0; c < row.length; c++) {
-        const val = row[c]?.value;
+    for (let r = 0; r < matrix.length; r++) {
+        const val = matrix[r]?.[colIndex]?.value;
         if (val === undefined) continue;
         if (val === unknownSymbol) continue;
         if (typeof val === 'number' && !Number.isNaN(val)) {
@@ -24,6 +23,5 @@ export function rowMean(matrix: ItemInfo[][], rowIndex: number): number | undefi
     return sum / count;
 }
 
-
-export default rowMean;
+export default colMean;
 
