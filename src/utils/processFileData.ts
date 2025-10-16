@@ -1,5 +1,8 @@
 import {type ItemInfo, useFileInfoStore} from "@/store/fileInfoStore";
 
+// esta función procesa los datos del archivo para extraer el valor mínimo y máximo,
+// así como las dimensiones de la matriz (número de filas y columnas).
+
 export function processFileData() {
     const fileInfoStore = useFileInfoStore();
     const fileData = fileInfoStore.getFileData;
@@ -23,7 +26,7 @@ export function processFileData() {
     fileInfoStore.setMinItemValue(min);
     fileInfoStore.setMaxItemValue(max);
     fileInfoStore.setRows(rows);
-    fileInfoStore.setCols(cols);
+    fileInfoStore.setCols(cols!);
 
     console.log("Data processed successfully:");
     console.log({ min, max, rows, cols });
