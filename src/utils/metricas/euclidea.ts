@@ -10,16 +10,16 @@ export function euclideanDistance(Row1: number, Row2: number, Item: boolean = fa
   let Mean1 = matrixInfo.getRowMean(Row1);
   let Mean2 = matrixInfo.getRowMean(Row2);
   if (Item){
-    Mean1 = matrixInfo.getiMean(Row1);
-    Mean2 = matrixInfo.getiMean(Row2);
+    Mean1 = matrixInfo.getColMean(Row1);
+    Mean2 = matrixInfo.getColMean(Row2);
   }
   if (Mean1 === undefined || Mean2 === undefined) return undefined;
 
   let Data1;
   let Data2;
   if (Item) {
-    Data1 = matrixInfo.geti(Row1);
-    Data2 = matrixInfo.geti(Row2);
+    Data1 = matrixInfo.getCol(Row1);
+    Data2 = matrixInfo.getCol(Row2);
   } else {
     Data1 = matrixInfo.getRow(Row1);
     Data2 = matrixInfo.getRow(Row2);
