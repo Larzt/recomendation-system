@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { FileReader, MatrixViewer } from '@/components';
 import {useFileInfoStore} from "@/store";
+import { mainFunction } from './utils/main_function';
+
 
 const useFileStore = useFileInfoStore();
 
@@ -10,6 +12,7 @@ const useFileStore = useFileInfoStore();
   <FileReader />
   <MatrixViewer v-if="useFileStore.fileData" />
 </template>
+
 
 <style lang="scss">
 html, body {

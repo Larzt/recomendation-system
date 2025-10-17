@@ -2,6 +2,7 @@ import type { ItemInfo } from "@/store/fileInfoStore";
 import { useMatrixInfoStore } from "@/store";
 import { unknownSymbol } from "@/constants";
 
+
 // Función para calcular la distancia euclídea entre dos vectores (filas de la matriz).
 // Ignora los valores desconocidos representados por unknownSymbol.
 
