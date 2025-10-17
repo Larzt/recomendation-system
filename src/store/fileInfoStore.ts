@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { processFileData, generateMatrix, rowMean } from "@/utils";
-import { dummyFunction } from "@/utils/metricas/pearson";
+import { dummyFunction } from "@/utils/metricas/dummy";
 import {useMatrixInfoStore} from "@/store";
 // este archivo define una tienda llamada "fileInfo" que maneja el estado relacionado con la información del archivo,
 // incluyendo los datos del archivo, los valores mínimos y máximos de los ítems, y las dimensiones de la matriz (filas y columnas).
