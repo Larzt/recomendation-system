@@ -82,7 +82,7 @@ const uploadText = computed(() =>
   box-shadow: 0 2px 8px rgba(black, 0.05);
 
   &:hover {
-    background-color: lighten($bg-light, 5%);
+    background-color: $primary-lighten;
     border-color: $primary;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba($primary, 0.1);

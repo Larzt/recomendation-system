@@ -87,6 +87,7 @@ function handleSubmit() {
 </template>
 
 <style scoped lang="scss">
+
 .info-form {
   display: flex;
   flex-direction: column;
@@ -182,7 +183,7 @@ input[type='number'] {
   transition: background-color 0.25s, transform 0.15s, box-shadow 0.2s;
 
   &:hover {
-    background-color: darken($primary, 7%);
+    background-color: $primary-darken;
     transform: translateY(-2px);
     box-shadow: 0 4px 10px rgba($primary, 0.2);
   }
