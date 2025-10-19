@@ -37,7 +37,7 @@ export function euclideanDistance(Row1: number, Row2: number, Item: boolean = fa
   for (let i = 0; i < Data1.length; i++) {
     // const temp = ((Data1[i]?.value - Mean1)) * ((Data2[i]?.value - Mean2)) as number;
     if (Data1[i]?.value === unknownSymbol || Data2[i]?.value === unknownSymbol) continue;
-    numerator = (Data1[i]?.value as number - Mean1) * (Data2[i]?.value as number - Mean2);
+    numerator += (Data1[i]?.value as number - Mean1) * (Data2[i]?.value as number - Mean2);
     // numerator += temporal;
     // numerator_x += (Data1[i]?.value as number - Mean1) ** 2;
     // numerator_y += (Data2[i]?.value as number - Mean2) ** 2;

@@ -1,7 +1,7 @@
 import {useMatrixInfoStore} from '@/store';
 import {unknownSymbol} from '@/constants';
-
 import {euclideanDistance, pearsonCorrelation, cosineSimilarity, predictDifferenceWithMean, predictSimple} from './';
+
 
 interface ProcessResult {
     targetIndex: number;
@@ -15,17 +15,38 @@ interface Props {
 }
 
 
-/// TODO: no se si poner esta funcion aqui o en otro archivo 
-export function switchAlgorithm(algorithm: TAlgorithm, Row1: number, Row2: number, Item: boolean = false): number | undefined {
-    switch (algorithm) {
-        case 'euclidean':
-            return euclideanDistance(Row1, Row2, Item);
-        case 'pearson':
-            return pearsonCorrelation(Row1, Row2, Item);
-        case 'cosine':
-            return cosineSimilarity(Row1, Row2, Item);
-        default:
-            return undefined;
+/// TODO: no se si poner esta funcion aqui o en otro archivo
+export function switchAlgorithm(algorithm: TAlgorithm, Row1: number, Row2: number, Item: boolean = false): number | undefined  { 
+  switch (algorithm) {
+    case 'euclidean':
+      return euclideanDistance(Row1, Row2, Item);
+    case 'pearson':
+       return pearsonCorrelation(Row1, Row2, Item);
+     case 'cosine':
+       return cosenoDistance(Row1, Row2, Item);
+    default:
+      return undefined;
+  }
+}
+export function switchPrediction(prediction: TPrediction, ) {
+  switch (prediction) {
+    case 'meanDifference':
+      // return meanDifferencePrediction();
+      break;
+    case 'simple':
+      // return simplePrediction();
+      break;
+    default:
+      return undefined;
+  }
+}
+// funcion principal que realiza switch entre algoritmos de recomendacion
+export function mainFunction(props: Props) {
+    const matrixInfo = useMatrixInfoStore();
+    if (props.ItemBased) {
+        processItemBased(matrixInfo, props);
+    } else {
+        processUserBased(matrixInfo, props);
     }
 }
 
