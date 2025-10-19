@@ -2,6 +2,8 @@ import { useMatrixInfoStore } from '@/store';
 import { unknownSymbol } from '@/constants';
 
 import { euclideanDistance } from './metricas/euclidea';
+import { pearsonCorrelation } from './metricas/pearson';
+import { cosenoDistance } from './metricas/coseno';
 
 
 
@@ -17,10 +19,10 @@ export function switchAlgorithm(algorithm: TAlgorithm, Row1: number, Row2: numbe
   switch (algorithm) {
     case 'euclidean':
       return euclideanDistance(Row1, Row2, Item);
-    // case 'pearson':
-    //   return pearsonCorrelation(Row1, Row2, Item);
-    // case 'coseno':
-    //   return cosineSimilarity(Row1, Row2, Item);
+    case 'pearson':
+       return pearsonCorrelation(Row1, Row2, Item);
+     case 'cosine':
+       return cosenoDistance(Row1, Row2, Item);
     default:
       return undefined;
   }
