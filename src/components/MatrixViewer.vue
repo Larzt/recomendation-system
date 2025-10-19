@@ -32,7 +32,6 @@ const colMeans = computed(() => {
 
 <template>
   <div class="matrix-view">
-    <!-- Tabla de datos -->
     <table>
       <thead>
       <tr>

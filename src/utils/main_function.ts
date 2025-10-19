@@ -1,17 +1,14 @@
-import type { ItemInfo } from '@/store/fileInfoStore';
 import { useMatrixInfoStore } from '@/store';
 import { unknownSymbol } from '@/constants';
 
 import { euclideanDistance } from './metricas/euclidea';
 
-type AlgorithmType = 'euclidea' | 'pearson' | 'coseno';
-type PredictionType = 'diferencia_media' | 'simple';
 
 interface Props {
-  Algorithm: AlgorithmType;
+  Algorithm: TAlgorithm;
   Neighbors: number;
   ItemBased: boolean;
-  Prediction: PredictionType;
+  Prediction: TPrediction;
 }
 
 /// TODO: no se si poner esta funcion aqui o en otro archivo 

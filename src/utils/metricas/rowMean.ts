@@ -1,8 +1,6 @@
-import type { ItemInfo } from '@/store/fileInfoStore';
+import {unknownSymbol} from "@/constants";
 
-const unknownSymbol = '-';
-
-export function rowMean(matrix: ItemInfo[][], rowIndex: number): number | undefined {
+export function rowMean(matrix: IItemInfo[][], rowIndex: number): number | undefined {
     if (!matrix || matrix.length === 0) return undefined;
     const row = matrix[rowIndex];
     if (!row) return undefined;

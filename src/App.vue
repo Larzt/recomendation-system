@@ -1,16 +1,28 @@
 <script setup lang="ts">
-import { FileReader, MatrixViewer } from '@/components';
-import {useFileInfoStore} from "@/store";
+import { useMatrixInfoStore, useFileInfoStore } from '@/store'
+import { FileUploader, MatrixConfig, MatrixViewer } from '@/components'
 import { mainFunction } from './utils/main_function';
 
+const useFileStore = useFileInfoStore()
+const useMatrixInfo = useMatrixInfoStore()
 
-const useFileStore = useFileInfoStore();
+function handleConfigSubmit(payload: {
+  neighbors: number | null
+  algorithm: string
+  prediction: string
+}) {
+  console.log('⚙️ Configuración aplicada:', payload)
 
+  // Here, call the main function
+}
 </script>
 
 <template>
-  <FileReader />
-  <MatrixViewer v-if="useFileStore.fileData" />
+  <div class="container">
+    <FileUploader />
+    <MatrixConfig @submit="handleConfigSubmit" />
+    <MatrixViewer v-if="useFileStore.fileData" />
+  </div>
 </template>
 
 
@@ -26,5 +38,13 @@ html, body {
 #app {
   min-height: 100vh;
   width: 100%;
+}
+
+.container {
+  max-width: 600px;
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 </style>
