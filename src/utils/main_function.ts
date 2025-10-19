@@ -38,6 +38,7 @@ export function switchPrediction(prediction: TPrediction, ) {
 }
 // funcion principal que realiza switch entre algoritmos de recomendacion
 export function mainFunction(props: Props) {
+<<<<<<< Updated upstream
   const matrixInfo = useMatrixInfoStore();
   let RoworCol1: number;
   let RoworCol2: number;
@@ -117,4 +118,88 @@ export function mainFunction(props: Props) {
   }
   // coger los N vecinos más cercanos
   
+=======
+    const matrixInfo = useMatrixInfoStore();
+    if (props.ItemBased) {
+        processItemBased(matrixInfo, props);
+    } else {
+        processUserBased(matrixInfo, props);
+    }
+}
+
+/**
+ * Busca el índice objetivo (fila o columna) que contiene el símbolo desconocido.
+ */
+function findTargetIndex(
+    collection: Array<any> | undefined,
+    getValue: (el: any) => any,
+    unknownSymbol: string,
+    type: "fila" | "columna"
+): number | null {
+    if (!collection) return null;
+
+    for (let i = 0; i < collection.length; i++) {
+        const element = collection[i];
+        if (element && getValue(element) === unknownSymbol) {
+            console.log(`${type} objetivo encontrada en el índice ${i}`);
+            return i;
+        }
+    }
+    return null;
+}
+
+/**
+ * Calcula las distancias entre el índice objetivo y el resto.
+ */
+function calculateDistances(
+    matrixInfo: ReturnType<typeof useMatrixInfoStore>,
+    baseIndex: number,
+    totalCount: number,
+    algorithm: string,
+    isItemBased: boolean
+): Array<{ index: number; distance: number }> {
+    const distances: Array<{ index: number; distance: number }> = [];
+
+    for (let i = 0; i < totalCount; i++) {
+        if (i === baseIndex) continue;
+
+        const distance = switchAlgorithm(algorithm, baseIndex, i, isItemBased) as number;
+        distances.push({ index: i, distance });
+        console.log(
+            `Distancia entre ${isItemBased ? "columna" : "fila"} ${baseIndex} y ${
+                isItemBased ? "columna" : "fila"
+            } ${i}: ${distance}`
+        );
+    }
+
+    return distances;
+}
+
+/**
+ * Caso: recorrido por columnas (Item-Based)
+ */
+function processItemBased(matrixInfo: ReturnType<typeof useMatrixInfoStore>, props: Props) {
+    const firstRow = matrixInfo.getRow(0);
+    const unknownSymbol = matrixInfo.unknownSymbol ?? "?";
+
+    const targetCol = findTargetIndex(firstRow, (el) => el.value, unknownSymbol, "columna");
+    if (targetCol === null) return;
+
+    const totalCols = firstRow?.length ?? 0;
+    calculateDistances(matrixInfo, targetCol, totalCols, props.Algorithm, true);
+}
+
+/**
+ * Caso: recorrido por filas (User-Based)
+ */
+function processUserBased(matrixInfo: ReturnType<typeof useMatrixInfoStore>, props: Props) {
+    const firstCol = matrixInfo.getCol(0);
+    const unknownSymbol = matrixInfo.unknownSymbol ?? "?";
+
+    const targetRow = findTargetIndex(firstCol, (el) => el.value, unknownSymbol, "fila");
+    if (targetRow === null) return;
+
+    const totalRows = firstCol?.length ?? 0;
+    calculateDistances(matrixInfo, targetRow, totalRows, props.Algorithm, false);
+>>>>>>> Stashed changes
 }
