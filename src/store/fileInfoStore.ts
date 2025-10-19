@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia';
 import { processFileData, generateMatrix, rowMean } from "@/utils";
-import { dummyFunction } from "@/utils/metricas/pearson";
+import { dummyFunction } from "@/utils/metricas/dummy";
 import {useMatrixInfoStore} from "@/store";
+// este archivo define una tienda llamada "fileInfo" que maneja el estado relacionado con la información del archivo,
+// incluyendo los datos del archivo, los valores mínimos y máximos de los ítems, y las dimensiones de la matriz (filas y columnas).
+// También proporciona getters para acceder a estos estados y acciones para actualizar la información del archivo y sus propiedades relacionadas.
 
 export type ItemInfo = {
     value: string | number;
@@ -16,7 +19,7 @@ interface FileInfoState {
     rows: number;
     cols: number;
 }
-
+// define la tienda "fileInfo" con su estado, getters y acciones relacionadas. 
 export const useFileInfoStore = defineStore('fileInfo', {
     state: (): FileInfoState => ({
         fileData: "",

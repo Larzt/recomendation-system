@@ -1,8 +1,16 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useMatrixInfoStore } from '@/store/matrixInfoStore';
+import { mainFunction } from '@/utils/main_function';
 
 const matrixStore = useMatrixInfoStore();
+
+mainFunction({
+  Algorithm: 'euclidea',
+  Neighbors: 4,
+  ItemBased: true,
+  Prediction: 'simple'
+});
 
 // IMPORTANT!
 // 'computed' creates a reactive value that automatically updates

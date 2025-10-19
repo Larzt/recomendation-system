@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { useFileInfoStore } from '@/store'
-import { useMatrixInfoStore } from '@/store'
-import FileUploader from '@/components/FileUploader.vue'
-import MatrixConfig from '@/components/MatrixConfig.vue'
-import MatrixViewer from '@/components/MatrixViewer.vue'
+import { useMatrixInfoStore, useFileInfoStore } from '@/store'
+import { FileUploader, MatrixConfig, MatrixViewer } from '@/components'
+import { mainFunction } from './utils/main_function';
 
 const useFileStore = useFileInfoStore()
 const useMatrixInfo = useMatrixInfoStore()
@@ -30,6 +28,7 @@ function handleConfigSubmit(payload: {
     <MatrixViewer v-if="useFileStore.fileData" />
   </div>
 </template>
+
 
 <style lang="scss">
 html, body {
