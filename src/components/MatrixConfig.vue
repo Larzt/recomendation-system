@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { metricErrors, neighborsErrors, predictionErrors } from '@/constants'
+import { metricErrors, neighborsErrors, predictionErrors, algorithmList } from '@/constants'
 
 // Variables locales
 const neighbors = ref<number | null>(null)
@@ -42,7 +42,6 @@ function handleSubmit() {
     return
   }
 
-  // Emit the values to the father component
   emit('submit', {
     neighbors: neighbors.value,
     algorithm: selectedAlgorithm.value,
@@ -50,6 +49,7 @@ function handleSubmit() {
   })
 }
 </script>
+
 
 <template>
   <form class="info-form" @submit.prevent="handleSubmit">
@@ -61,7 +61,7 @@ function handleSubmit() {
     />
     <div class="button-group">
       <button
-          v-for="metric in ['Pearson', 'Coseno', 'Euclidean']"
+          v-for="metric in algorithmList"
           :key="metric"
           type="button"
           class="metric-btn"

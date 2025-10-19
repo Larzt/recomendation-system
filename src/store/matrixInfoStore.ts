@@ -25,8 +25,8 @@ export const useMatrixInfoStore = defineStore('matrixInfo', {
                 console.log("⚠️ La matriz está vacía.")
                 return
             }
-            const table = this.matrix.map(row => row.map(cell => cell.value))
-            console.table(table)
+            // const table = this.matrix.map(row => row.map(cell => cell.value))
+            // console.table(table)
         },
 
         setMatrix(matrix: ItemInfo[][]) {

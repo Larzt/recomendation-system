@@ -2,15 +2,15 @@ import { useMatrixInfoStore } from "@/store";
 import { unknownSymbol } from "@/constants";
 
 /**
- * Calculates cosine similarity between two rows or two columns.
+ * Calculates cosine distance between two rows or two columns.
  * Ignores unknown values represented by unknownSymbol.
  *
  * @param Index1 - Index of the first row/column.
  * @param Index2 - Index of the second row/column.
  * @param isColumn - If true, calculates between columns (items); otherwise, between rows (users).
- * @returns Cosine similarity (range: 0 to 1) or undefined if not computable.
+ * @returns Cosine distance (range: 0 to 1) or undefined if not computable.
  */
-export function cosenoDistance(Index1: number, Index2: number, isColumn = false): number | undefined {
+export function cosineSimilarity(Index1: number, Index2: number, isColumn = false): number | undefined {
   const matrixInfo = useMatrixInfoStore();
 
   // Select vectors depending on mode

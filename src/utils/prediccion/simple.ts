@@ -2,49 +2,85 @@ import type { ItemInfo } from "@/store/fileInfoStore";
 import { useMatrixInfoStore } from "@/store";
 import { unknownSymbol } from "@/constants";
 
+interface PredictSimpleProps {
+    targetIndex: number;
+    neighbors: Array<{ index: number; distance: number }>;
+    itemBased: boolean;
+}
 
 
 /**
  * Predicts simple.
  */
-export function predictSimple(
-  targetIndex: number,
-  neighbors: { index: number; similarity: number }[],
-  isColumn = false
-): number | undefined { 
+export function predictSimple(props: PredictSimpleProps): number | undefined {
+    const matrixInfo = useMatrixInfoStore();
+    const { targetIndex, neighbors, itemBased } = props;
+    console.log("=== predictDifferenceWithMean ===");
+    console.log("Props:", props);
 
-  const matrixInfo = useMatrixInfoStore();
+    let numerator = 0;
+    let denominator = 0;
 
-  let numerator = 0;
-  let denominator = 0;
+    for (const neighbor of neighbors) {
+        console.log("==============================\n");
+        const sim = neighbor.distance;
+        console.log("Neighbor:", neighbor, "sim:", sim);
 
-  for (const neighbor of neighbors) {
-    const sim = neighbor.similarity;
-    if (sim === undefined || Number.isNaN(sim)) continue;
+        if (sim === undefined || Number.isNaN(sim)) {
+            console.log("Skipping neighbor: sim is undefined or NaN");
+            continue;
+        }
 
-    // Get the neighbor's row/column data and mean
-    const neighborData = isColumn
-      ? matrixInfo.getRow(neighbor.index) // item-based → rows are users
-      : matrixInfo.getCol(neighbor.index); // user-based → columns are items
+        // Get neighbor data
+        const neighborData = !itemBased
+            ? matrixInfo.getRow(neighbor.index)
+            : matrixInfo.getCol(neighbor.index);
 
-    const neighborMean = isColumn
-      ? matrixInfo.getRowMean(neighbor.index)
-      : matrixInfo.getColMean(neighbor.index);
+        const neighborMean = !itemBased
+            ? matrixInfo.getRowMean(neighbor.index)
+            : matrixInfo.getColMean(neighbor.index);
 
-    if (!neighborData || neighborMean === undefined) continue;
+        console.log("neighborData:", neighborData);
+        console.log("neighborMean:", neighborMean);
 
-    // Get the rating of the neighbor for the target element
-    const rating = isColumn
-      ? neighborData[targetIndex]?.value // user-based filtering
-      : neighborData[targetIndex]?.value; // item-based filtering
+        if (!neighborData || neighborMean === undefined) {
+            console.log("Skipping neighbor: data or mean undefined");
+            continue;
+        }
 
-    if (rating === undefined || rating === unknownSymbol || typeof rating !== "number") continue;
+        // Get rating for target
+        const rating = neighborData[targetIndex]?.value;
+        console.log("targetIndex:", targetIndex, "rating:", rating);
 
-    numerator += sim * (rating);
-    denominator += Math.abs(sim);
-  }
+        if (rating === undefined || rating === unknownSymbol || typeof rating !== "number") {
+            console.log("Skipping rating: invalid or unknownSymbol");
+            continue;
+        }
 
-  if (denominator === 0) return undefined;
+        numerator += sim * rating;
+        denominator += Math.abs(sim);
 
-  return  numerator / denominator;
+        console.log(`Running sum => numerator: ${numerator}, denominator: ${denominator}`);
+    }
+
+    if (denominator === 0) {
+        console.log("Denominator is 0, returning undefined");
+        return undefined;
+    }
+
+    // Calculate mean of the main element
+    const meanMain = !itemBased
+        ? matrixInfo.getRowMean(targetIndex)
+        : matrixInfo.getColMean(targetIndex);
+    console.log("meanMain:", meanMain);
+
+    if (meanMain === undefined) {
+        console.log("meanMain undefined, returning undefined");
+        return undefined;
+    }
+
+    // console.log(`Running sum => numerator: ${numerator}, denominator: ${denominator}`);
+    const result = numerator / denominator;
+    console.log("Predicted value:", result);
+    return result;
 }

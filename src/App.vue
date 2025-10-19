@@ -8,11 +8,16 @@ const useMatrixInfo = useMatrixInfoStore()
 
 function handleConfigSubmit(payload: {
   neighbors: number | null
-  algorithm: string
-  prediction: string
+  algorithm: TAlgorithm
+  prediction: TPrediction
 }) {
-  console.log('⚙️ Configuración aplicada:', payload)
-
+  console.log('Configuración aplicada:', payload)
+  mainFunction({
+    algorithm: payload.algorithm,
+    maxNeighbors: payload.neighbors ?? 2,
+    itemBased: false,
+    prediction: payload.prediction,
+  })
   // Here, call the main function
 }
 </script>

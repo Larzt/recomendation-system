@@ -29,5 +29,5 @@ export function processFileData() {
     fileInfoStore.setCols(cols!);
 
     console.log("Data processed successfully:");
-    console.log({ min, max, rows, cols });
+    // console.log({ min, max, rows, cols });
 }

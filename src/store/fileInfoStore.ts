@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { processFileData, generateMatrix, rowMean } from "@/utils";
-import { dummyFunction } from "@/utils/metricas/dummy";
 import {useMatrixInfoStore} from "@/store";
 
 // este archivo define una tienda llamada "fileInfo" que maneja el estado relacionado con la información del archivo,
@@ -36,9 +35,6 @@ export const useFileInfoStore = defineStore('fileInfo', {
             this.fileData = data;
             processFileData();
             generateMatrix();
-            dummyFunction();
-            const useMatrixStore = useMatrixInfoStore();
-            console.log(useMatrixStore.getRowMean(0));
         },
         setMinItemValue(min: number) {
             this.minItemValue = min;

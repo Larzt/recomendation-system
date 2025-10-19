@@ -1,6 +1,6 @@
 declare global {
     type TAlgorithm = 'euclidean' | 'pearson' | 'cosine';
-    type TPrediction = 'meanDifference' | 'simple';
+    type TPrediction = 'difference' | 'simple';
 
     interface IItemInfo {
         value: string | number;
