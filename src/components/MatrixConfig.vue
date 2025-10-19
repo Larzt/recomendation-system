@@ -42,7 +42,7 @@ function handleSubmit() {
     return
   }
 
-  // Emitir los valores al componente padre
+  // Emit the values to the father component
   emit('submit', {
     neighbors: neighbors.value,
     algorithm: selectedAlgorithm.value,
@@ -53,15 +53,12 @@ function handleSubmit() {
 
 <template>
   <form class="info-form" @submit.prevent="handleSubmit">
-    <!-- Input de vecinos -->
     <input
         type="number"
         min="1"
         placeholder="Número de vecinos"
         @change="handleNeighbors"
     />
-
-    <!-- Botones de métricas -->
     <div class="button-group">
       <button
           v-for="metric in ['Pearson', 'Coseno', 'Euclidean']"
@@ -75,7 +72,6 @@ function handleSubmit() {
       </button>
     </div>
 
-    <!-- Selector -->
     <div class="form-group">
       <label for="opciones">Selecciona una opción</label>
       <select id="opciones" @change="handleOptionChange">
@@ -85,10 +81,7 @@ function handleSubmit() {
       </select>
     </div>
 
-    <!-- Mensaje de error -->
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-
-    <!-- Botón de envío -->
     <button type="submit" class="submit-btn">Aplicar configuración</button>
   </form>
 </template>

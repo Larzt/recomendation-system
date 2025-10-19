@@ -44,5 +44,5 @@ export const useMatrixInfoStore = defineStore('matrixInfo', {
 })
 
 // esto lo que hace es crear una tienda llamada "matrixInfo" que tiene un estado 
-// con una matriz de ItemInfo, getters para obtener la matriz y valores específicos, 
+// con una matriz de IItemInfo, getters para obtener la matriz y valores específicos,
 // y acciones para mostrar la matriz, establecerla y calcular medias de filas y columnas.

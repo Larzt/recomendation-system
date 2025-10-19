@@ -6,7 +6,6 @@ import { mainFunction } from './utils/main_function';
 const useFileStore = useFileInfoStore()
 const useMatrixInfo = useMatrixInfoStore()
 
-// Manejador del evento que viene del Config
 function handleConfigSubmit(payload: {
   neighbors: number | null
   algorithm: string
@@ -21,10 +20,7 @@ function handleConfigSubmit(payload: {
 <template>
   <div class="container">
     <FileUploader />
-
-    <!-- Escucha el evento emitido -->
     <MatrixConfig @submit="handleConfigSubmit" />
-
     <MatrixViewer v-if="useFileStore.fileData" />
   </div>
 </template>
