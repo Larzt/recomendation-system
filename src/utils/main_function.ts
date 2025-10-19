@@ -4,6 +4,7 @@ import { unknownSymbol } from '@/constants';
 import { euclideanDistance } from './metricas/euclidea';
 
 
+
 interface Props {
   Algorithm: TAlgorithm;
   Neighbors: number;
@@ -50,9 +51,9 @@ export function mainFunction(props: Props) {
  * Busca el índice objetivo (fila o columna) que contiene el símbolo desconocido.
  */
 function findTargetIndex(
-    collection: Array<any> | undefined,
-    getValue: (el: any) => any,
-    unknownSymbol: string,
+    collection: Array<IItemInfo>,
+    getValue: (element: IItemInfo) => IItemInfo['value'],
+
     type: "fila" | "columna"
 ): number | null {
     if (!collection) return null;
@@ -74,7 +75,7 @@ function calculateDistances(
     matrixInfo: ReturnType<typeof useMatrixInfoStore>,
     baseIndex: number,
     totalCount: number,
-    algorithm: string,
+    algorithm: TAlgorithm,
     isItemBased: boolean
 ): Array<{ index: number; distance: number }> {
     const distances: Array<{ index: number; distance: number }> = [];
@@ -99,9 +100,8 @@ function calculateDistances(
  */
 function processItemBased(matrixInfo: ReturnType<typeof useMatrixInfoStore>, props: Props) {
     const firstRow = matrixInfo.getRow(0);
-    const unknownSymbol = matrixInfo.unknownSymbol ?? "?";
 
-    const targetCol = findTargetIndex(firstRow, (el) => el.value, unknownSymbol, "columna");
+    const targetCol = findTargetIndex(firstRow, (el) => el.value, "columna");
     if (targetCol === null) return;
 
     const totalCols = firstRow?.length ?? 0;
@@ -113,9 +113,8 @@ function processItemBased(matrixInfo: ReturnType<typeof useMatrixInfoStore>, pro
  */
 function processUserBased(matrixInfo: ReturnType<typeof useMatrixInfoStore>, props: Props) {
     const firstCol = matrixInfo.getCol(0);
-    const unknownSymbol = matrixInfo.unknownSymbol ?? "?";
 
-    const targetRow = findTargetIndex(firstCol, (el) => el.value, unknownSymbol, "fila");
+    const targetRow = findTargetIndex(firstCol, (el) => el.value, "fila");
     if (targetRow === null) return;
 
     const totalRows = firstCol?.length ?? 0;
