@@ -23,33 +23,11 @@ export function switchAlgorithm(algorithm: TAlgorithm, Row1: number, Row2: numbe
     case 'pearson':
        return pearsonCorrelation(Row1, Row2, Item);
      case 'cosine':
-       return cosenoDistance(Row1, Row2, Item);
+       return cosineSimilarity(Row1, Row2, Item);
     default:
       return undefined;
   }
 }
-export function switchPrediction(prediction: TPrediction, ) {
-  switch (prediction) {
-    case 'meanDifference':
-      // return meanDifferencePrediction();
-      break;
-    case 'simple':
-      // return simplePrediction();
-      break;
-    default:
-      return undefined;
-  }
-}
-// funcion principal que realiza switch entre algoritmos de recomendacion
-export function mainFunction(props: Props) {
-    const matrixInfo = useMatrixInfoStore();
-    if (props.ItemBased) {
-        processItemBased(matrixInfo, props);
-    } else {
-        processUserBased(matrixInfo, props);
-    }
-}
-
 export function switchPrediction(prediction: TPrediction, targetIndex, neighbors, maxNeighbors, itemBased: boolean): number {
     const clamped = neighbors.slice(0, maxNeighbors);
     switch (prediction) {
