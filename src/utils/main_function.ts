@@ -67,12 +67,12 @@ function findTargetIndex(
     if (!collection || collection.length === 0) return null;
 
     for (let i = 0; i < collection.length; i++) {
-        const { value, row, col } = collection[i];
+        const { value, row, col } = collection[i]; // Desestructura para obtener el valor, fila y columna
 
         // console.log(`${type} [${i}] -> valor: (${typeof value}) "${value}", posición: [fila=${row}, col=${col}]` );
 
         if (value === unknownSymbol) {
-            const targetIndex = type === "fila" ? row : col;
+            const targetIndex = type === "fila" ? row : col; // Determina el índice objetivo según el tipo
             console.log(`${type} objetivo encontrada en el índice ${targetIndex}`);
             return targetIndex;
         }
@@ -108,17 +108,25 @@ function calculateDistances(baseIndex: number, totalCount: number, algorithm: TA
     return distances;
 }
 
+function getAllCells(): IItemInfo[] {
+    const cells: IItemInfo[] = [];
+    useMatrixInfoStore().matrix.forEach((row) => {
+        row.forEach((cell) => {
+            cells.push(cell);
+        });
+    });
+    return cells;
+}
 /**
  * Caso: recorrido por columnas (Item-Based)
  */
 function processItemBased(props: Props) {
     const useMatrixInfo = useMatrixInfoStore();
-    const firstCol = useMatrixInfo.getCol(0);
-
-    const targetCol = findTargetIndex(firstCol, "columna");
+    const allCells = getAllCells();
+    const targetCol = findTargetIndex(allCells, "columna");
     if (targetCol === null) return;
 
-    const totalCols = firstCol?.length ?? 0;
+    const totalCols = useMatrixInfo.getCol(0)?.length ?? 0;
     const distances = calculateDistances(targetCol, totalCols, props.algorithm, true);
     return { targetIndex: targetCol, distances };
 }
@@ -128,12 +136,11 @@ function processItemBased(props: Props) {
  */
 function processUserBased(props: Props): ProcessResult {
     const useMatrixInfo = useMatrixInfoStore();
-    const firstRow = useMatrixInfo.getRow(0);
-
-    const targetRow = findTargetIndex(firstRow, "fila");
+    const allCells = getAllCells();
+    const targetRow = findTargetIndex(allCells, "fila");
     if (targetRow === null) return;
-
-    const totalRows = firstRow?.length ?? 0;
+    
+    const totalRows = useMatrixInfo.matrix.length;
     const distances = calculateDistances(targetRow, totalRows, props.algorithm, false);
     return { targetIndex: targetRow, distances };
 }
