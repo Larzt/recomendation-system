@@ -1,6 +1,6 @@
 import { useMatrixInfoStore } from "@/store";
 import { unknownSymbol } from "@/constants";
-import { getNeighborRating } from "./getNeighborRating"
+import { getNeighborRating } from "./getNeighborRating";
 
 /**
  * Predicts the rating of an item for a user using the "difference with the mean" approach.
@@ -10,7 +10,7 @@ import { getNeighborRating } from "./getNeighborRating"
  *
  * @param targetIndex - Index of the target column/row (the item/user we want to predict)
  * @param elementIndex - Index of the element (column for user-based, row for item-based) being predicted
- * @param maxNeighbors - Array of maxNeighbors with their distance values [{ index, distance }]
+ * @param neighbors - Array of neighbors with their distance values [{ index, distance }]
  * @param itemBased - If true, works with columns (items); otherwise, with rows (users)
  * @returns The predicted rating or undefined if not computable.
  */
@@ -35,6 +35,15 @@ export function predictDifferenceWithMean(props: DifferenceProps): number | unde
             console.log("Skipping neighbor: distance is undefined or NaN");
             continue;
         }
+        
+        const neighborMean = !itemBased
+            ? matrixInfo.getRowMean(neighbor.index)
+            : matrixInfo.getColMean(neighbor.index);
+
+        if (neighborMean === undefined) {
+            console.log("Skipping neighbor: mean undefined");
+            continue;
+        }
 
         const rating = getNeighborRating(neighbor, elementIndex, matrixInfo, itemBased, unknownSymbol);
         if (rating === null) continue;
@@ -43,7 +52,7 @@ export function predictDifferenceWithMean(props: DifferenceProps): number | unde
         denominator += Math.abs(distance);
     }
 
-    if (denominator == 0) {
+    if (denominator === 0) {
         console.log("Denominator is 0, returning undefined");
         return undefined;
     }
@@ -57,6 +66,5 @@ export function predictDifferenceWithMean(props: DifferenceProps): number | unde
         return undefined;
     }
 
-    return mainMean + (numerator / denominator);
+    return mainMean + numerator / denominator;
 }
-
