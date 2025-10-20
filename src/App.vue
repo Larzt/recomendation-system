@@ -15,7 +15,7 @@ function handleConfigSubmit(payload: {
   mainFunction({
     algorithm: payload.algorithm,
     maxNeighbors: payload.neighbors ?? 2,
-    itemBased: false,
+    itemBased: payload.itemBased,
     prediction: payload.prediction,
   })
   // Here, call the main function

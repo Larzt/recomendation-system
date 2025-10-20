@@ -6,6 +6,7 @@ import { metricErrors, neighborsErrors, predictionErrors, algorithmList } from '
 const neighbors = ref<number | null>(null)
 const selectedAlgorithm = ref('')
 const selectedPrediction = ref('')
+const itemBased = ref<boolean | null>(null)
 const errorMessage = ref('')
 
 function handleNeighbors(event: Event) {
@@ -17,9 +18,14 @@ function selectMetric(metric: string) {
   selectedAlgorithm.value = metric
 }
 
-function handleOptionChange(event: Event) {
+function handlePredictionChange(event: Event) {
   const select = event.target as HTMLSelectElement
   selectedPrediction.value = select.value
+}
+
+function handleModeChange(event: Event) {
+  const select = event.target as HTMLSelectElement
+  itemBased.value = select.value === 'item' // "item" → true, "user" → false
 }
 
 const emit = defineEmits(['submit'])
@@ -42,14 +48,19 @@ function handleSubmit() {
     return
   }
 
+  if (itemBased.value === null) {
+    errorMessage.value = 'Selecciona un modo: Item-Based o User-Based'
+    return
+  }
+
   emit('submit', {
     neighbors: neighbors.value,
     algorithm: selectedAlgorithm.value,
     prediction: selectedPrediction.value,
+    itemBased: itemBased.value,
   })
 }
 </script>
-
 
 <template>
   <form class="info-form" @submit.prevent="handleSubmit">
@@ -59,6 +70,7 @@ function handleSubmit() {
         placeholder="Número de vecinos"
         @change="handleNeighbors"
     />
+
     <div class="button-group">
       <button
           v-for="metric in algorithmList"
@@ -72,13 +84,25 @@ function handleSubmit() {
       </button>
     </div>
 
+    <!-- Selección de tipo de predicción -->
     <div class="form-group">
-      <label for="opciones">Selecciona una opción</label>
-      <select id="opciones" @change="handleOptionChange">
-        <option value="">-- Selecciona --</option>
-        <option value="simple">Simple</option>
-        <option value="difference">Diferencia con la media</option>
-      </select>
+      <div class="form-items">
+        <label for="prediction">Tipo de predicción</label>
+        <select id="prediction" @change="handlePredictionChange">
+          <option value="">-- Selecciona --</option>
+          <option value="simple">Simple</option>
+          <option value="difference">Diferencia con la media</option>
+        </select>
+      </div>
+
+      <div class="form-items">
+        <label for="mode">Modo de recomendación</label>
+        <select id="mode" @change="handleModeChange">
+          <option value="">-- Selecciona --</option>
+          <option value="user">User-Based</option>
+          <option value="item">Item-Based</option>
+        </select>
+      </div>
     </div>
 
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
@@ -146,23 +170,35 @@ input[type='number'] {
     border-color: $primary;
   }
 }
-
 .form-group {
   display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem; /* espacio entre items */
+  width: 100%;
+
+  .form-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 
   label {
     font-weight: 600;
     color: $primary;
+    width: 100%;
   }
 
   select {
+    margin-top: .7rem;
+    width: 100%;
     padding: 0.6rem 0.8rem;
     border: 1px solid $border;
     border-radius: 0.5rem;
     font-size: 1rem;
     transition: border-color 0.2s, box-shadow 0.2s;
+
     &:focus {
       border-color: $primary;
       box-shadow: 0 0 0 3px rgba($primary, 0.15);

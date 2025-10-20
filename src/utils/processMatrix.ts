@@ -13,7 +13,7 @@ export function generateMatrix() {
 
     const lines = fileData.trim().split(/\r?\n/);
     const dataLines = lines.slice(2);
-    
+
     console.log("=== DEBUG generateMatrix ===");
     console.log("Total lines:", lines.length);
     console.log("Data lines count:", dataLines.length);
