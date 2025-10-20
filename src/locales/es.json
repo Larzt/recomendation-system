@@ -1,0 +1,34 @@
+{
+  "fileUpload": {
+    "placeholder": "Haz clic aquí o arrastra un archivo .txt",
+    "success": "Archivo subido correctamente."
+  },
+  "form": {
+    "neighborsPlaceholder": "Número de vecinos",
+    "predictionLabel": "Tipo de predicción",
+    "predictionOptions": {
+      "select": "-- Seleccionar --",
+      "simple": "Simple",
+      "difference": "Diferencia con la media"
+    },
+    "modeLabel": "Modo de recomendación",
+    "modeOptions": {
+      "select": "-- Seleccionar --",
+      "user": "Usuarios",
+      "item": "Ítems"
+    },
+    "submitButton": "Aplicar configuración",
+    "errors": {
+      "neighbors": "Por favor, introduce un número válido de vecinos",
+      "metric": "Selecciona un algoritmo",
+      "prediction": "Selecciona un tipo de predicción",
+      "mode": "Selecciona un modo: Ítems o Usuarios"
+    }
+  },
+  "matrix": {
+    "user": "Usuario",
+    "item": "Ítem",
+    "mean": "Media",
+    "unknown": "Desconocido"
+  }
+}

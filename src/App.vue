@@ -2,34 +2,49 @@
 import { useMatrixInfoStore, useFileInfoStore } from '@/store'
 import { FileUploader, MatrixConfig, MatrixViewer } from '@/components'
 import { mainFunction } from './utils/mainFunction';
+import { useI18n } from 'vue-i18n'
 
+const { locale } = useI18n()
 const useFileStore = useFileInfoStore()
-const useMatrixInfo = useMatrixInfoStore()
+
+function changeLanguage(lang: string) {
+  locale.value = lang
+}
 
 function handleConfigSubmit(payload: {
   neighbors: number | null
   algorithm: TAlgorithm
   prediction: TPrediction
 }) {
-  console.log('Configuración aplicada:', payload)
   mainFunction({
     algorithm: payload.algorithm,
     maxNeighbors: payload.neighbors ?? 2,
     itemBased: payload.itemBased,
     prediction: payload.prediction,
   })
-  // Here, call the mainFunction function
 }
 </script>
 
 <template>
-  <div class="container">
-    <FileUploader />
-    <MatrixConfig @submit="handleConfigSubmit" />
-    <MatrixViewer v-if="useFileStore.fileData" />
+  <div class="app-wrapper">
+    <div class="language-switcher">
+      <button
+          :class="{ active: locale === 'es' }"
+          @click="changeLanguage('es')"
+      >ES</button>
+      <button
+          :class="{ active: locale === 'en' }"
+          @click="changeLanguage('en')"
+      >EN</button>
+    </div>
+
+    <div class="container">
+      <FileUploader />
+      <MatrixConfig @submit="handleConfigSubmit" />
+      <MatrixViewer v-if="useFileStore.fileData" />
+    </div>
   </div>
 </template>
-
 
 <style lang="scss">
 html, body {
@@ -40,14 +55,52 @@ html, body {
   background-color: $bg-dark;
 }
 
-#app {
+.app-wrapper {
+  position: relative;
   min-height: 100vh;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+
+  .language-switcher {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    gap: 0.5rem;
+
+    button {
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
+      border: 2px solid $primary;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 6px $shadow-light;
+      }
+
+      &.active {
+        background-color: $primary;
+        color: white;
+        box-shadow: 0 2px 6px $shadow-hover;
+      }
+
+      &:not(.active) {
+        background-color: $bg-light;
+        color: $primary;
+      }
+    }
+  }
 }
 
 .container {
   max-width: 600px;
-  margin: 2rem auto;
+  width: 100%;
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
   gap: 2rem;

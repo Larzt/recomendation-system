@@ -1,21 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useMatrixInfoStore } from '@/store/matrixInfoStore';
+import { computed } from 'vue'
+import { useMatrixInfoStore } from '@/store/matrixInfoStore'
+import { useI18n } from 'vue-i18n'
 
-const matrixStore = useMatrixInfoStore();
-const matrix = computed(() => matrixStore.getMatrix);
+const matrixStore = useMatrixInfoStore()
+const { t } = useI18n()
 
+const matrix = computed(() => matrixStore.getMatrix)
 const rowMeans = computed(() => {
-  if (!matrix.value.length) return [] as (number | undefined)[];
-  return matrix.value.map((_, rowIndex) => matrixStore.getRowMean(rowIndex));
-});
-
+  if (!matrix.value.length) return [] as (number | undefined)[]
+  return matrix.value.map((_, rowIndex) => matrixStore.getRowMean(rowIndex))
+})
 const colMeans = computed(() => {
-  const m = matrix.value;
-  if (!m.length) return [] as (number | undefined)[];
-  const cols = m[0]?.length ?? 0;
-  return Array.from({ length: cols }, (_, c) => matrixStore.getColMean(c));
-});
+  const m = matrix.value
+  if (!m.length) return [] as (number | undefined)[]
+  const cols = m[0]?.length ?? 0
+  return Array.from({ length: cols }, (_, c) => matrixStore.getColMean(c))
+})
 </script>
 
 <template>
@@ -24,16 +25,20 @@ const colMeans = computed(() => {
       <thead class="matrix-header">
       <tr>
         <th class="header-empty"></th>
-        <th v-for="(cell, colIndex) in matrix[0]" :key="colIndex" class="header-cell">
-          Item {{ colIndex + 1 }}
+        <th
+            v-for="(cell, colIndex) in matrix[0]"
+            :key="colIndex"
+            class="header-cell"
+        >
+          {{ t('matrix.item') }} {{ colIndex + 1 }}
         </th>
-        <th class="header-mean">Mean</th>
+        <th class="header-mean">{{ t('matrix.mean') }}</th>
       </tr>
       </thead>
 
       <tbody class="matrix-body">
       <tr v-for="(row, rowIndex) in matrix" :key="rowIndex" class="matrix-row">
-        <td class="user-label">User {{ rowIndex + 1 }}</td>
+        <td class="user-label">{{ t('matrix.user') }} {{ rowIndex + 1 }}</td>
         <td
             v-for="(cell, colIndex) in row"
             :key="colIndex"
@@ -47,7 +52,7 @@ const colMeans = computed(() => {
 
       <tfoot class="matrix-footer">
       <tr>
-        <th class="footer-label">Mean</th>
+        <th class="footer-label">{{ t('matrix.mean') }}</th>
         <td
             v-for="(mean, colIndex) in colMeans"
             :key="'mean-'+colIndex"

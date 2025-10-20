@@ -1,0 +1,34 @@
+{
+  "fileUpload": {
+    "placeholder": "Click here or drag a .txt file",
+    "success": "File uploaded successfully."
+  },
+  "form": {
+    "neighborsPlaceholder": "Number of neighbors",
+    "predictionLabel": "Prediction type",
+    "predictionOptions": {
+      "select": "-- Select --",
+      "simple": "Simple",
+      "difference": "Difference with mean"
+    },
+    "modeLabel": "Recommendation mode",
+    "modeOptions": {
+      "select": "-- Select --",
+      "user": "Users",
+      "item": "Items"
+    },
+    "submitButton": "Apply configuration",
+    "errors": {
+      "neighbors": "Please enter a valid number of neighbors",
+      "metric": "Select an algorithm",
+      "prediction": "Select a prediction type",
+      "mode": "Select mode: Items or Users"
+    }
+  },
+  "matrix": {
+    "user": "User",
+    "item": "Item",
+    "mean": "Mean",
+    "unknown": "Unknown"
+  }
+}

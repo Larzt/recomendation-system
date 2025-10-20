@@ -18,7 +18,8 @@
   "dependencies": {
     "@phosphor-icons/vue": "^2.2.1",
     "pinia": "^3.0.3",
-    "vue": "^3.5.22"
+    "vue": "^3.5.22",
+    "vue-i18n": "11"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",

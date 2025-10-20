@@ -2,8 +2,10 @@
 import { ref, computed } from 'vue'
 import { useFileInfoStore } from '@/store'
 import { PhFileArrowUp, PhCheckSquareOffset } from '@phosphor-icons/vue'
+import { useI18n } from 'vue-i18n'
 
 const useFileInfo = useFileInfoStore()
+const { t } = useI18n()
 
 const fileInput = ref<HTMLInputElement | null>(null)
 
@@ -25,9 +27,7 @@ function handleFileUpload(event: Event) {
 }
 
 const uploadText = computed(() =>
-    useFileInfo.fileData
-        ? 'File uploaded successfully.'
-        : 'Click here or drag a .txt file'
+    useFileInfo.fileData ? t('fileUpload.success') : t('fileUpload.placeholder')
 )
 </script>
 

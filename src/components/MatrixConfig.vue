@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { metricErrors, neighborsErrors, predictionErrors, algorithmList } from '@/constants'
 
+const { t } = useI18n()
 const neighbors = ref<number | null>(null)
 const selectedAlgorithm = ref('')
 const selectedPrediction = ref('')
@@ -29,31 +31,30 @@ function handleModeChange(event: Event) {
 
 const emit = defineEmits(['submit'])
 
-function capitalizeFirstLetter(val) {
-  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+function capitalizeFirstLetter(val: string) {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1)
 }
-
 
 function handleSubmit() {
   errorMessage.value = ''
 
   if (!neighbors.value || neighbors.value <= 0) {
-    errorMessage.value = neighborsErrors
+    errorMessage.value = t('form.errors.neighbors')
     return
   }
 
   if (!selectedAlgorithm.value) {
-    errorMessage.value = metricErrors
+    errorMessage.value = t('form.errors.metric')
     return
   }
 
   if (!selectedPrediction.value) {
-    errorMessage.value = predictionErrors
+    errorMessage.value = t('form.errors.prediction')
     return
   }
 
   if (itemBased.value === null) {
-    errorMessage.value = 'Select mode: Items o Users'
+    errorMessage.value = t('form.errors.mode')
     return
   }
 
@@ -71,7 +72,7 @@ function handleSubmit() {
     <input
         type="number"
         min="1"
-        placeholder="Number of neighbors"
+        :placeholder="t('form.neighborsPlaceholder')"
         @change="handleNeighbors"
     />
 
@@ -90,31 +91,30 @@ function handleSubmit() {
 
     <div class="form-group">
       <div class="form-items">
-        <label for="prediction">Prediction type</label>
+        <label for="prediction">{{ t('form.predictionLabel') }}</label>
         <select id="prediction" @change="handlePredictionChange">
-          <option value="">-- Select --</option>
-          <option value="simple">Simple</option>
-          <option value="difference">Difference with mean</option>
+          <option value="">{{ t('form.predictionOptions.select') }}</option>
+          <option value="simple">{{ t('form.predictionOptions.simple') }}</option>
+          <option value="difference">{{ t('form.predictionOptions.difference') }}</option>
         </select>
       </div>
 
       <div class="form-items">
-        <label for="mode">Recomendation mode</label>
+        <label for="mode">{{ t('form.modeLabel') }}</label>
         <select id="mode" @change="handleModeChange">
-          <option value="">-- Select --</option>
-          <option value="user">Users</option>
-          <option value="item">Items</option>
+          <option value="">{{ t('form.modeOptions.select') }}</option>
+          <option value="user">{{ t('form.modeOptions.user') }}</option>
+          <option value="item">{{ t('form.modeOptions.item') }}</option>
         </select>
       </div>
     </div>
 
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <button type="submit" class="submit-btn">Apply configuration</button>
+    <button type="submit" class="submit-btn">{{ t('form.submitButton') }}</button>
   </form>
 </template>
 
 <style scoped lang="scss">
-
 .info-form {
   display: flex;
   flex-direction: column;
@@ -173,18 +173,18 @@ input[type='number'] {
     border-color: $primary;
   }
 }
+
 .form-group {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 1rem; /* espacio entre items */
+  gap: 1rem;
   width: 100%;
 
   .form-items {
     flex: 1;
     display: flex;
     flex-direction: column;
-    width: 100%;
   }
 
   label {
@@ -194,7 +194,7 @@ input[type='number'] {
   }
 
   select {
-    margin-top: .7rem;
+    margin-top: 0.7rem;
     width: 100%;
     padding: 0.6rem 0.8rem;
     border: 1px solid $border;
