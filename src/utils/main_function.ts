@@ -40,20 +40,94 @@ export function switchPrediction(prediction: TPrediction, targetIndex, neighbors
     }
 }
 
+
 // funcion principal que realiza switch entre algoritmos de recomendacion
-export function mainFunction(props: Props): number  {
-    let result: ProcessResult | null = null;
-
-    if (props.itemBased) {
-        result = processItemBased(props);
-    } else {
-        result = processUserBased(props);
+export function mainFunction(props: Props): void {
+    const matrixInfo = useMatrixInfoStore();
+    
+    console.log("=== Iniciando predicción de todas las celdas desconocidas ===");
+    
+    // Contador para evitar loops infinitos
+    let maxIterations = 1000;
+    let iteration = 0;
+    
+    // Repetir mientras haya celdas con unknownSymbol
+    while (iteration < maxIterations) {
+        iteration++;
+        
+        // Buscar la siguiente celda con unknownSymbol
+        let foundUnknown = false;
+        let unknownRow = -1;
+        let unknownCol = -1;
+        
+        // Recorrer toda la matriz buscando unknownSymbol
+        outerLoop: for (let row = 0; row < matrixInfo.matrix.length; row++) {
+            const rowData = matrixInfo.matrix[row];
+            if (!rowData) continue;
+            
+            for (let col = 0; col < rowData.length; col++) {
+                if (rowData[col]?.value === unknownSymbol) {
+                    unknownRow = row;
+                    unknownCol = col;
+                    foundUnknown = true;
+                    break outerLoop;
+                }
+            }
+        }
+        
+        // Si no se encontró ningún unknownSymbol, terminar
+        if (!foundUnknown) {
+            console.log(`✅ Todas las celdas desconocidas han sido predichas. Total de iteraciones: ${iteration - 1}`);
+            break;
+        }
+        
+        console.log(`\n--- Iteración ${iteration}: Prediciendo celda [${unknownRow}, ${unknownCol}] ---`);
+        
+        // Calcular predicción para esta celda
+        let result: ProcessResult | null = null;
+        
+        if (props.itemBased) {
+            // Item-based: trabajar con la columna
+            const totalCols = matrixInfo.getCol(0)?.length ?? 0;
+            const distances = calculateDistances(unknownCol, totalCols, props.algorithm, true);
+            result = { targetIndex: unknownCol, distances };
+        } else {
+            // User-based: trabajar con la fila
+            const totalRows = matrixInfo.matrix.length;
+            const distances = calculateDistances(unknownRow, totalRows, props.algorithm, false);
+            result = { targetIndex: unknownRow, distances };
+        }
+        
+        if (!result) {
+            console.warn(`⚠️ No se pudo calcular predicción para [${unknownRow}, ${unknownCol}]`);
+            // Actualizar con un valor por defecto para evitar loop infinito
+            matrixInfo.setPosition(unknownRow, unknownCol, 0);
+            continue;
+        }
+        
+        result.distances.sort((a, b) => b.distance - a.distance); // Ordenar de mayor a menor similitud
+        let predictValue = switchPrediction(props.prediction, result.targetIndex, result.distances, props.maxNeighbors, props.itemBased);
+        
+        // Redondear a 2 decimales
+        if (predictValue !== undefined) {
+            const roundedValue = Math.round((predictValue + Number.EPSILON) * 100) / 100;
+            predictValue = roundedValue;
+            console.log(`Valor predicho para [${unknownRow}, ${unknownCol}]: ${predictValue}`);
+            
+            // Actualizar la matriz con el valor predicho
+            matrixInfo.setPosition(unknownRow, unknownCol, predictValue);
+        } else {
+            console.warn(`⚠️ Predicción undefined para [${unknownRow}, ${unknownCol}], usando 0`);
+            matrixInfo.setPosition(unknownRow, unknownCol, 0);
+        }
     }
-
-    if (!result) return;
-    result.distances.sort()
-
-    return switchPrediction(props.prediction, result.targetIndex, result.distances, props.maxNeighbors, props.itemBased);
+    
+    if (iteration >= maxIterations) {
+        console.error(`❌ Se alcanzó el máximo de iteraciones (${maxIterations}). Puede haber un problema.`);
+    }
+    
+    console.log("\n=== Matriz final después de todas las predicciones ===");
+    matrixInfo.showMatrix();
 }
 
 
