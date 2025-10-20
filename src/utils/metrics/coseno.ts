@@ -26,7 +26,6 @@ export function cosineSimilarity(Index1: number, Index2: number, isColumn = fals
     const val1 = data1[i]?.value;
     const val2 = data2[i]?.value;
 
-    // Skip unknown or invalid values
     if (val1 === unknownSymbol || val2 === unknownSymbol) continue;
     if (typeof val1 !== "number" || typeof val2 !== "number") continue;
 

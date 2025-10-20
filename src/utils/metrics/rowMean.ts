@@ -1,13 +1,15 @@
 import {unknownSymbol} from "@/constants";
 
-export function colMean(matrix: IItemInfo[][], colIndex: number): number | undefined {
+export function rowMean(matrix: IItemInfo[][], rowIndex: number): number | undefined {
     if (!matrix || matrix.length === 0) return undefined;
+    const row = matrix[rowIndex];
+    if (!row) return undefined;
 
     let sum = 0;
     let count = 0;
 
-    for (let r = 0; r < matrix.length; r++) {
-        const val = matrix[r]?.[colIndex]?.value; // Accede al valor en la columna específica de la fila r. En caso de que no exista, val será undefined.
+    for (let c = 0; c < row.length; c++) {
+        const val = row[c]?.value;
         if (val === undefined) continue;
         if (val === unknownSymbol) continue;
         if (typeof val === 'number' && !Number.isNaN(val)) {
@@ -19,6 +21,4 @@ export function colMean(matrix: IItemInfo[][], colIndex: number): number | undef
     if (count === 0) return undefined;
     return sum / count;
 }
-
-export default colMean;
 

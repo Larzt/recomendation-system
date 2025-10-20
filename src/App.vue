@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useMatrixInfoStore, useFileInfoStore } from '@/store'
 import { FileUploader, MatrixConfig, MatrixViewer } from '@/components'
-import { mainFunction } from './utils/main_function';
+import { mainFunction } from './utils/mainFunction';
 
 const useFileStore = useFileInfoStore()
 const useMatrixInfo = useMatrixInfoStore()
@@ -18,7 +18,7 @@ function handleConfigSubmit(payload: {
     itemBased: payload.itemBased,
     prediction: payload.prediction,
   })
-  // Here, call the main function
+  // Here, call the mainFunction function
 }
 </script>
 
