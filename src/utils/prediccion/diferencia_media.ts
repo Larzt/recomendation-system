@@ -1,4 +1,3 @@
-import type { ItemInfo } from "@/store/fileInfoStore";
 import { useMatrixInfoStore } from "@/store";
 import { unknownSymbol } from "@/constants";
 
@@ -16,13 +15,14 @@ import { unknownSymbol } from "@/constants";
 
 interface DifferenceProps {
     targetIndex: number;
+    elementIndex: number; // Index of the element (column for user-based, row for item-based) being predicted
     neighbors: Array<{ index: number; distance: number }>;
     itemBased: boolean;
 }
 
 export function predictDifferenceWithMean(props: DifferenceProps): number | undefined {
     const matrixInfo = useMatrixInfoStore();
-    const { targetIndex, neighbors, itemBased } = props;
+    const { targetIndex, elementIndex, neighbors, itemBased } = props;
     console.log("=== predictDifferenceWithMean ===");
     console.log("Props:", props);
 
@@ -56,9 +56,11 @@ export function predictDifferenceWithMean(props: DifferenceProps): number | unde
             continue;
         }
 
-        // Get rating for target
-        const rating = neighborData[targetIndex]?.value;
-        console.log("targetIndex:", targetIndex, "rating:", rating);
+        // Get rating for the element we're predicting
+        // For user-based: get the neighbor's rating in the target column
+        // For item-based: get the neighbor's rating in the target row
+        const rating = neighborData[elementIndex]?.value;
+        console.log("elementIndex:", elementIndex, "rating:", rating);
 
         if (rating === undefined || rating === unknownSymbol || typeof rating !== "number") {
             console.log("Skipping rating: invalid or unknownSymbol");

@@ -5,6 +5,7 @@ import {euclideanDistance, pearsonCorrelation, cosineSimilarity, predictDifferen
 
 interface ProcessResult {
     targetIndex: number;
+    elementIndex: number; // Column index for user-based, row index for item-based
     distances: Array<{ index: number; distance: number }>;
 }
 interface Props {
@@ -28,13 +29,20 @@ export function switchAlgorithm(algorithm: TAlgorithm, Row1: number, Row2: numbe
       return undefined;
   }
 }
-export function switchPrediction(prediction: TPrediction, targetIndex, neighbors, maxNeighbors, itemBased: boolean): number {
+export function switchPrediction(
+    prediction: TPrediction,
+    targetIndex: number,
+    elementIndex: number,
+    neighbors: Array<{ index: number; distance: number }>,
+    maxNeighbors: number,
+    itemBased: boolean
+): number | undefined {
     const clamped = neighbors.slice(0, maxNeighbors);
     switch (prediction) {
         case 'difference':
-            return predictDifferenceWithMean({targetIndex, neighbors: clamped, itemBased});
+            return predictDifferenceWithMean({targetIndex, elementIndex, neighbors: clamped, itemBased});
         case 'simple':
-            return predictSimple({targetIndex, neighbors: clamped, itemBased});
+            return predictSimple({targetIndex, elementIndex, neighbors: clamped, itemBased});
         default:
             return undefined;
     }
@@ -90,12 +98,12 @@ export function mainFunction(props: Props): void {
             // Item-based: trabajar con la columna
             const totalCols = matrixInfo.getCol(0)?.length ?? 0;
             const distances = calculateDistances(unknownCol, totalCols, props.algorithm, true);
-            result = { targetIndex: unknownCol, distances };
+            result = { targetIndex: unknownCol, elementIndex: unknownRow, distances };
         } else {
             // User-based: trabajar con la fila
             const totalRows = matrixInfo.matrix.length;
             const distances = calculateDistances(unknownRow, totalRows, props.algorithm, false);
-            result = { targetIndex: unknownRow, distances };
+            result = { targetIndex: unknownRow, elementIndex: unknownCol, distances };
         }
         
         if (!result) {
@@ -106,7 +114,14 @@ export function mainFunction(props: Props): void {
         }
         
         result.distances.sort((a, b) => b.distance - a.distance); // Ordenar de mayor a menor similitud
-        let predictValue = switchPrediction(props.prediction, result.targetIndex, result.distances, props.maxNeighbors, props.itemBased);
+        let predictValue = switchPrediction(
+            props.prediction,
+            result.targetIndex,
+            result.elementIndex,
+            result.distances,
+            props.maxNeighbors,
+            props.itemBased
+        );
         
         // Redondear a 2 decimales
         if (predictValue !== undefined) {
@@ -190,31 +205,4 @@ function getAllCells(): IItemInfo[] {
         });
     });
     return cells;
-}
-/**
- * Caso: recorrido por columnas (Item-Based)
- */
-function processItemBased(props: Props) {
-    const useMatrixInfo = useMatrixInfoStore();
-    const allCells = getAllCells();
-    const targetCol = findTargetIndex(allCells, "columna");
-    if (targetCol === null) return;
-
-    const totalCols = useMatrixInfo.getCol(0)?.length ?? 0;
-    const distances = calculateDistances(targetCol, totalCols, props.algorithm, true);
-    return { targetIndex: targetCol, distances };
-}
-
-/**
- * Caso: recorrido por filas (User-Based) is currently working
- */
-function processUserBased(props: Props): ProcessResult {
-    const useMatrixInfo = useMatrixInfoStore();
-    const allCells = getAllCells();
-    const targetRow = findTargetIndex(allCells, "fila");
-    if (targetRow === null) return;
-    
-    const totalRows = useMatrixInfo.matrix.length;
-    const distances = calculateDistances(targetRow, totalRows, props.algorithm, false);
-    return { targetIndex: targetRow, distances };
 }

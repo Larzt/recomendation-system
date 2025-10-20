@@ -10,15 +10,22 @@ export function processFileData() {
     // Early return if no data
     if (!fileData) return;
 
-    // Text to lines
-    const lines = fileData.trim().split(/\r?\n/).filter(l => l.trim() !== "");
+    // Text to lines - NO FILTRAR líneas vacías aquí porque puede eliminar filas válidas
+    const lines = fileData.trim().split(/\r?\n/);
+
+    console.log("=== DEBUG processFileData ===");
+    console.log("Total lines:", lines.length);
+    console.log("Lines:", lines);
 
     // minValue and maxValue
     const min = parseFloat(lines[0]!);
     const max = parseFloat(lines[1]!);
 
-    // Rows and cols
+    // Rows and cols - tomar desde línea 2 en adelante
     const dataRows = lines.slice(2);
+    console.log("Data rows count:", dataRows.length);
+    console.log("Data rows:", dataRows);
+    
     const rows = dataRows.length;
     const cols = dataRows[0]?.trim().split(/\s+/).length;
 

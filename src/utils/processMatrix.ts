@@ -1,4 +1,4 @@
-import { type ItemInfo, useFileInfoStore, useMatrixInfoStore } from "@/store";
+import { useFileInfoStore, useMatrixInfoStore } from "@/store";
 import {unknownSymbol} from "@/constants";
 
 // esta función genera una matriz de IItemInfo a partir de los datos del archivo
@@ -13,12 +13,18 @@ export function generateMatrix() {
 
     const lines = fileData.trim().split(/\r?\n/);
     const dataLines = lines.slice(2);
+    
+    console.log("=== DEBUG generateMatrix ===");
+    console.log("Total lines:", lines.length);
+    console.log("Data lines count:", dataLines.length);
+    console.log("Data lines:", dataLines);
 
-    const matrix: ItemInfo[][] = dataLines.map((line, rowIndex) => {
+    const matrix: IItemInfo[][] = dataLines.map((line, rowIndex) => {
         const values = line.trim().split(/\s+/);
+        console.log(`Row ${rowIndex}:`, values);
         return values.map((val, colIndex) => {
             const value = val === unknownSymbol ? unknownSymbol : Number(val);
-            const item: ItemInfo = {
+            const item: IItemInfo = {
                 value,
                 row: rowIndex,
                 col: colIndex,
@@ -27,5 +33,7 @@ export function generateMatrix() {
         });
     });
 
+    console.log("Generated matrix rows:", matrix.length);
+    console.log("Matrix:", matrix);
     useMatrixInfo.setMatrix(matrix);
 }
