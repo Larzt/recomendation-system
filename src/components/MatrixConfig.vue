@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { metricErrors, neighborsErrors, predictionErrors, algorithmList } from '@/constants'
 
-// Variables locales
 const neighbors = ref<number | null>(null)
 const selectedAlgorithm = ref('')
 const selectedPrediction = ref('')
@@ -25,10 +24,15 @@ function handlePredictionChange(event: Event) {
 
 function handleModeChange(event: Event) {
   const select = event.target as HTMLSelectElement
-  itemBased.value = select.value === 'item' // "item" → true, "user" → false
+  itemBased.value = select.value === 'item'
 }
 
 const emit = defineEmits(['submit'])
+
+function capitalizeFirstLetter(val) {
+  return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+}
+
 
 function handleSubmit() {
   errorMessage.value = ''
@@ -49,7 +53,7 @@ function handleSubmit() {
   }
 
   if (itemBased.value === null) {
-    errorMessage.value = 'Selecciona un modo: Item-Based o User-Based'
+    errorMessage.value = 'Select mode: Items o Users'
     return
   }
 
@@ -67,7 +71,7 @@ function handleSubmit() {
     <input
         type="number"
         min="1"
-        placeholder="Número de vecinos"
+        placeholder="Number of neighbors"
         @change="handleNeighbors"
     />
 
@@ -80,33 +84,32 @@ function handleSubmit() {
           :class="{ active: selectedAlgorithm === metric }"
           @click="selectMetric(metric)"
       >
-        {{ metric }}
+        {{ capitalizeFirstLetter(metric) }}
       </button>
     </div>
 
-    <!-- Selección de tipo de predicción -->
     <div class="form-group">
       <div class="form-items">
-        <label for="prediction">Tipo de predicción</label>
+        <label for="prediction">Prediction type</label>
         <select id="prediction" @change="handlePredictionChange">
-          <option value="">-- Selecciona --</option>
+          <option value="">-- Select --</option>
           <option value="simple">Simple</option>
-          <option value="difference">Diferencia con la media</option>
+          <option value="difference">Difference with mean</option>
         </select>
       </div>
 
       <div class="form-items">
-        <label for="mode">Modo de recomendación</label>
+        <label for="mode">Recomendation mode</label>
         <select id="mode" @change="handleModeChange">
-          <option value="">-- Selecciona --</option>
-          <option value="user">User-Based</option>
-          <option value="item">Item-Based</option>
+          <option value="">-- Select --</option>
+          <option value="user">Users</option>
+          <option value="item">Items</option>
         </select>
       </div>
     </div>
 
     <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
-    <button type="submit" class="submit-btn">Aplicar configuración</button>
+    <button type="submit" class="submit-btn">Apply configuration</button>
   </form>
 </template>
 

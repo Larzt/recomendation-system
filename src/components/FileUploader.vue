@@ -26,8 +26,8 @@ function handleFileUpload(event: Event) {
 
 const uploadText = computed(() =>
     useFileInfo.fileData
-        ? 'Archivo cargado correctamente'
-        : 'Haz clic aquí o arrastra un archivo .txt'
+        ? 'File uploaded successfully.'
+        : 'Click here or drag a .txt file'
 )
 </script>
 
@@ -110,7 +110,6 @@ const uploadText = computed(() =>
   }
 }
 
-/* ===== Animaciones ===== */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease;
