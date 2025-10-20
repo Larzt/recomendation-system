@@ -1,33 +1,33 @@
-# 🎯 Sistema de Recomendación
+#  Sistema de Recomendación
 
 Sistema de recomendación colaborativo basado en filtrado que implementa múltiples algoritmos de similitud y métodos de predicción. Desarrollado con Vue 3, TypeScript y Vite.
 
-## 📋 Tabla de Contenidos
+##  Resumen del Proyecto
 
+Este sistema implementa **filtrado colaborativo** para predecir valoraciones desconocidas en matrices usuario-ítem. Permite cargar archivos con datos, configurar diferentes algoritmos (Euclidiana, Pearson, Coseno) y métodos de predicción (Simple, Diferencia con media), y visualizar los resultados en una interfaz interactiva. El sistema procesa automáticamente todas las celdas desconocidas de forma iterativa hasta completar la matriz.
+
+## 👥 Participantes
+
+- **Víctor Rodríguez Dorta** - alu0101540153
+- **Alejandro Rodríguez Mederos** - alu0101413938
+- **Mario Guerra Pérez** - alu0101395036
+
+## �📋 Tabla de Contenidos
+
+- [Resumen del Proyecto](#-resumen-del-proyecto)
+- [Participantes](#-participantes)
 - [Características](#-características)
 - [Tecnologías](#-tecnologías)
 - [Requisitos Previos](#-requisitos-previos)
 - [Instalación](#-instalación)
+- [Cómo Iniciar el Programa](#-cómo-iniciar-el-programa)
 - [Uso](#-uso)
 - [Algoritmos Implementados](#-algoritmos-implementados)
 - [Estructura del Proyecto](#-estructura-del-proyecto)
 - [Formato de Archivo](#-formato-de-archivo)
 - [Ejemplos](#-ejemplos)
+- [Scripts Disponibles](#-scripts-disponibles)
 - [Contribuir](#-contribuir)
-
-## ✨ Características
-
-- **Filtrado Colaborativo**: Implementa filtrado basado en usuarios e ítems
-- **Múltiples Métricas de Similitud**:
-  - Distancia Euclidiana
-  - Correlación de Pearson
-  - Similitud del Coseno
-- **Métodos de Predicción**:
-  - Predicción Simple
-  - Predicción con Diferencia de Media
-- **Interfaz Interactiva**: Visualización de matriz en tiempo real con medias por fila y columna
-- **Multiidioma**: Soporte para español e inglés
-- **Procesamiento Iterativo**: Predicción automática de todos los valores desconocidos
 
 ## 🛠 Tecnologías
 
@@ -41,8 +41,26 @@ Sistema de recomendación colaborativo basado en filtrado que implementa múltip
 
 ## 📦 Requisitos Previos
 
-- Node.js `^20.19.0` o `>=22.12.0`
-- Bun `>=1.0.0` ([Instalar Bun](https://bun.sh))
+- **Bun** `>=1.0.0` (Runtime y gestor de paquetes JavaScript)
+
+### 🔧 Cómo Instalar Bun
+
+**Windows (PowerShell):**
+```powershell
+powershell -c "irm bun.sh/install.ps1 | iex"
+```
+
+**Linux/macOS:**
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+**Verificar la instalación:**
+```bash
+bun --version
+```
+
+Para más información sobre la instalación de Bun, visita: https://bun.sh/docs/installation
 
 ## 🚀 Instalación
 
@@ -52,17 +70,34 @@ git clone https://github.com/Larzt/recomendation-system.git
 cd recomendation-system
 ```
 
-2. Instala las dependencias:
+2. Instala las dependencias con Bun:
 ```bash
 bun install
 ```
 
-3. Inicia el servidor de desarrollo:
+## 🎮 Cómo Iniciar el Programa
+
+### Modo Desarrollo
+
+Inicia el servidor de desarrollo con hot-reload:
+
 ```bash
 bun dev
 ```
 
-4. Abre tu navegador en `http://localhost:5173`
+El servidor se iniciará automáticamente en `http://localhost:5173` (o el siguiente puerto disponible).
+
+### Modo Producción
+
+Para compilar y ejecutar en modo producción:
+
+```bash
+# Compilar para producción
+bun run build
+
+# Previsualizar la build de producción
+bun run preview
+```
 
 ## 📖 Uso
 
@@ -227,16 +262,6 @@ bun run lint
 bun run format
 ```
 
-## 🤝 Contribuir
-
-Las contribuciones son bienvenidas. Por favor:
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
 ## 📝 Notas Técnicas
 
 - **Gestión de Estado**: Utiliza Pinia con dos stores principales:
@@ -249,13 +274,8 @@ Las contribuciones son bienvenidas. Por favor:
 
 - **Validación**: Formulario con validación completa de parámetros antes de ejecutar predicciones
 
-## 📧 Contacto
-
-Mario Guerra Pérez - [@Larzt](https://github.com/Larzt)
 
 Link del Proyecto: [https://github.com/Larzt/recomendation-system](https://github.com/Larzt/recomendation-system)
 
----
-
-⭐ Si este proyecto te ha sido útil, considera darle una estrella en GitHub
+**Proyecto académico** - Gestión del Conocimiento en las Organizaciones (GCO)
 
