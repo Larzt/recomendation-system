@@ -6,12 +6,11 @@ Este proyecto implementa un **sistema de recomendación** interactivo construido
 
 ## 🚀 Características principales
 
-- 📂 **Carga de archivos CSV** con datos de usuarios e ítems.
+- 📂 **Carga de archivos** con datos de usuarios e ítems.
 - ⚙️ **Configuración del algoritmo**: selección de tipo de recomendación (user-based / item-based), vecinos máximos y método de predicción.
 - 📊 **Visualización interactiva de la matriz** con medias por filas y columnas.
-- 🌍 **Soporte multilenguaje** (Español / Inglés) usando `vue-i18n`.
-- 🎨 **Diseño moderno y adaptable**, basado en una paleta personalizada y componentes reutilizables.
-- 🧩 Arquitectura modular: componentes, stores y utilidades bien organizados.
+- 🌍 **Soporte multilenguaje** (Español / Inglés).
+- 🧩 **Arquitectura modular:** componentes, stores y utilidades bien organizados.
 
 ---
 
@@ -25,8 +24,6 @@ Este proyecto implementa un **sistema de recomendación** interactivo construido
 | Internacionalización | [Vue I18n](https://vue-i18n.intlify.dev/) |
 | Build Tool | [Vite](https://vite.dev/) |
 | Dependencias | [Bun](https://bun.sh/) |
-| Estilos | SCSS + variables de color personalizadas |
-| UI | [@nuxt/ui](https://ui.nuxt.com/) (para algunos componentes visuales) |
 
 ---
 
