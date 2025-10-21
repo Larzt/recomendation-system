@@ -35,7 +35,7 @@ export function predictDifferenceWithMean(props: DifferenceProps): number | unde
             console.log("Skipping neighbor: distance is undefined or NaN");
             continue;
         }
-        
+
         const neighborMean = !itemBased
             ? matrixInfo.getRowMean(neighbor.index)
             : matrixInfo.getColMean(neighbor.index);

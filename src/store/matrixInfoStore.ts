@@ -33,7 +33,7 @@ export const useMatrixInfoStore = defineStore('matrixInfo', {
             this.matrix = matrix
         },
 
-        setPosition(row: number, col: number, value: any) {
+        setPosition(row: number, col: number, value: number | string) {
             if (this.matrix[row]) {
                 this.matrix[row][col] = { ...this.matrix[row][col], value };
             }

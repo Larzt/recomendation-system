@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useMatrixInfoStore, useFileInfoStore } from '@/store'
+import { useFileInfoStore } from '@/store'
 import { FileUploader, MatrixConfig, MatrixViewer } from '@/components'
 import { mainFunction } from './utils/mainFunction';
 import { useI18n } from 'vue-i18n'

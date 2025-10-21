@@ -11,7 +11,7 @@ interface Props {
 
 export function mainFunction(props: Props): void {
     const matrixInfo = useMatrixInfoStore();
-    let maxIterations = 1000;
+    const maxIterations = 1000;
     let iteration = 0;
 
     while (iteration < maxIterations) {

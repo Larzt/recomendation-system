@@ -1,48 +1,48 @@
-# vue-project
+# 🧠 Sistema de Recomendación – Vue 3 + TypeScript
 
-This template should help get you started developing with Vue 3 in Vite.
+Este proyecto implementa un **sistema de recomendación** interactivo construido con **Vue 3**, **Pinia** y **Vite**, que permite **cargar matrices de usuarios e ítems**, configurar parámetros de recomendación y **visualizar resultados calculados dinámicamente** en una interfaz moderna y responsive.
 
-## Recommended IDE Setup
+---
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## 🚀 Características principales
 
-## Recommended Browser Setup
+- 📂 **Carga de archivos CSV** con datos de usuarios e ítems.
+- ⚙️ **Configuración del algoritmo**: selección de tipo de recomendación (user-based / item-based), vecinos máximos y método de predicción.
+- 📊 **Visualización interactiva de la matriz** con medias por filas y columnas.
+- 🌍 **Soporte multilenguaje** (Español / Inglés) usando `vue-i18n`.
+- 🎨 **Diseño moderno y adaptable**, basado en una paleta personalizada y componentes reutilizables.
+- 🧩 Arquitectura modular: componentes, stores y utilidades bien organizados.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+---
 
-## Type Support for `.vue` Imports in TS
+## 🏗️ Tecnologías utilizadas
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+| Tipo | Herramienta |
+|------|--------------|
+| Framework | [Vue 3](https://vuejs.org/) |
+| Lenguaje | [TypeScript](https://www.typescriptlang.org/) |
+| Estado global | [Pinia](https://pinia.vuejs.org/) |
+| Internacionalización | [Vue I18n](https://vue-i18n.intlify.dev/) |
+| Build Tool | [Vite](https://vite.dev/) |
+| Dependencias | [Bun](https://bun.sh/) |
+| Estilos | SCSS + variables de color personalizadas |
+| UI | [@nuxt/ui](https://ui.nuxt.com/) (para algunos componentes visuales) |
 
-## Customize configuration
+---
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
+## ⚙️ Instalación
+Asegúrate de tener **[Bun](https://bun.sh/)** instalado.
+```bash
 bun install
 ```
 
-### Compile and Hot-Reload for Development
-
-```sh
+## 🧩 Ejecución del proyecto
+🔥 Desarrollo (hot reload)
+```bash
 bun dev
 ```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-bun run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
+✅ Linting del código
+```bash
 bun lint
 ```

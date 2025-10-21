@@ -1,4 +1,3 @@
-import type { ItemInfo } from "@/store/fileInfoStore";
 import { useMatrixInfoStore } from "@/store";
 import { unknownSymbol } from "@/constants";
 

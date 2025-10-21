@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { metricErrors, neighborsErrors, predictionErrors, algorithmList } from '@/constants'
+import { algorithmList } from '@/constants'
 
 const { t } = useI18n()
 const neighbors = ref<number | null>(null)

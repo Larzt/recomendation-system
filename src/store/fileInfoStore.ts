@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
-import { generateDataFromFile, matrixBuilder, rowMean } from "@/utils";
-import {useMatrixInfoStore} from "@/store";
+import { generateDataFromFile, matrixBuilder } from "@/utils";
 
 // este archivo define una tienda llamada "fileInfo" que maneja el estado relacionado con la información del archivo,
 // incluyendo los datos del archivo, los valores mínimos y máximos de los ítems, y las dimensiones de la matriz (filas y columnas).
