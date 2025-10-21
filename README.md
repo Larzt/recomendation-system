@@ -2,6 +2,7 @@
 
 Este proyecto implementa un **sistema de recomendación** interactivo construido con **Vue 3**, **Pinia** y **Vite**, que permite **cargar matrices de usuarios e ítems**, configurar parámetros de recomendación y **visualizar resultados calculados dinámicamente** en una interfaz moderna y responsive.
 
+Enlace al informe: https://github.com/Larzt/recomendation-system/blob/main/Sistemas_de_recomendaci%C3%B3n_VictorAlejandroMario.pdf 
 ---
 
 ## 🚀 Características principales
